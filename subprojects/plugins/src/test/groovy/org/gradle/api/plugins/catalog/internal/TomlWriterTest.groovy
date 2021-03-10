@@ -62,7 +62,7 @@ class TomlWriterTest extends Specification {
 
     def "generated file contains model version"() {
         when:
-        writer.generate(Stub(DefaultVersionCatalog), Stub(Map))
+        writer.generate(Stub(DefaultVersionCatalog))
 
         then:
         output.toString().contains """#
@@ -74,7 +74,7 @@ format.version = "1.0"
     }
 
     private void generateFromModel() {
-        writer.generate(sourceModel.deps, sourceModel.plugins)
+        writer.generate(sourceModel.deps)
         outputModel = parse(new ByteArrayInputStream(output.toString().getBytes("utf-8")))
     }
 
@@ -105,11 +105,11 @@ format.version = "1.0"
             Interners.newStrongInterner(),
             Interners.newStrongInterner(),
             TestUtil.objectFactory(),
-            TestUtil.providerFactory(),
-            pluginsSpec,
+            TestUtil.providerFactory()
+            ,
             Stub(Supplier))
         ins.withCloseable {
-            TomlCatalogFileParser.parse(it, builder, pluginsSpec, new ImportConfiguration(acceptAll(), acceptAll(), acceptAll(), acceptAll()))
+            TomlCatalogFileParser.parse(it, builder, new ImportConfiguration(acceptAll(), acceptAll(), acceptAll(), acceptAll()))
         }
         return new Model(builder.build(), plugins)
     }

@@ -44,7 +44,6 @@ class TomlCatalogFileParserTest extends Specification {
         Interners.newStrongInterner(),
         TestUtil.objectFactory(),
         TestUtil.providerFactory(),
-        Stub(PluginDependenciesSpec),
         Stub(Supplier),
     )
     final Map<String, TestPlugin> plugins = [:].withDefault { new TestPlugin() }
@@ -77,14 +76,6 @@ class TomlCatalogFileParserTest extends Specification {
         then:
         InvalidUserDataException ex = thrown()
         ex.message == "A bundle with name 'guava' declares a dependency on 'hello' which doesn't exist"
-    }
-
-    def "parses a file with a single plugin and nothing else"() {
-        when:
-        parse('one-plugin')
-
-        then:
-        hasPlugin('org.gradle.test.my-plugin', '1.0')
     }
 
     def "parses a file with a single version and nothing else"() {
@@ -248,8 +239,7 @@ class TomlCatalogFileParserTest extends Specification {
         'invalid11' | "On alias 'test' expected an array but value of 'reject' is a table"
         'invalid12' | "Unknown top level elements [toto, tata]"
         'invalid13' | "On bundle 'groovy' expected an array but value of 'groovy' is a string"
-        'invalid14' | "On plugin 'my.awesome.plugin' expected a string but value of 'my.awesome.plugin' is a boolean"
-        'invalid15' | "Referenced version 'nope' doesn't exist on dependency com:foo"
+        'invalid14' | "Referenced version 'nope' doesn't exist on dependency com:foo"
     }
 
     def "supports dependencies without version"() {
@@ -304,7 +294,7 @@ class TomlCatalogFileParserTest extends Specification {
     }
 
     private void parse(String name) {
-        TomlCatalogFileParser.parse(toml(name), builder, pluginsSpec, importConf)
+        TomlCatalogFileParser.parse(toml(name), builder, importConf)
         model = builder.build()
         assert model != null: "Expected model to be generated but it wasn't"
     }
