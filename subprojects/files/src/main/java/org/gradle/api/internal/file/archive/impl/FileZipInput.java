@@ -18,6 +18,8 @@ package org.gradle.api.internal.file.archive.impl;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.AbstractIterator;
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethods;
+import org.checkerframework.checker.objectconstruction.qual.Owning;
 import org.gradle.api.internal.file.archive.ZipEntry;
 import org.gradle.api.internal.file.archive.ZipInput;
 import org.gradle.internal.file.FileException;
@@ -63,7 +65,7 @@ public class FileZipInput implements ZipInput {
         return Integer.parseInt(versionParts[0]) >= 11;
     }
 
-    private final ZipFile file;
+    private final @Owning ZipFile file;
     private final Enumeration<? extends java.util.zip.ZipEntry> entries;
 
     private FileZipInput(File file) {
@@ -99,6 +101,7 @@ public class FileZipInput implements ZipInput {
     }
 
     @Override
+    @EnsuresCalledMethods(value = "this.file", methods = "close")
     public void close() throws IOException {
         file.close();
     }
