@@ -88,6 +88,7 @@ public class AntlrExecuter implements RequestHandler<AntlrSpec, AntlrResult> {
         }
     }
 
+    @SuppressWarnings("mustcall:return.type.incompatible")
     private abstract static class AntlrTool {
         /**
          * Utility method to create an instance of the Tool class.

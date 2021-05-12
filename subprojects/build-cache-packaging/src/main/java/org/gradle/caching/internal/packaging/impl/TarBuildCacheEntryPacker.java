@@ -262,6 +262,7 @@ public class TarBuildCacheEntryPacker implements BuildCacheEntryPacker {
         return unpackDirectoryTree(input, rootEntry, snapshots, entries, treeRoot, treeName);
     }
 
+    @SuppressWarnings("required.method.not.called") // FP: add @MCA annotation to CountingOutputStream in com.google.common.io
     private RegularFileSnapshot unpackFile(TarArchiveInputStream input, TarArchiveEntry entry, File file, String fileName) throws IOException {
         try (CountingOutputStream output = new CountingOutputStream(new FileOutputStream(file))) {
             HashCode hash = streamHasher.hashCopy(input, output);

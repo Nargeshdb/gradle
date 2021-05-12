@@ -70,6 +70,7 @@ public class MetadataExtracter {
     }
 
     @Nullable
+    @SuppressWarnings("objectconstruction:required.method.not.called")
     private String getPackageName(File grammarFileFile) {
         try {
             return getPackageName(new FileReader(grammarFileFile));

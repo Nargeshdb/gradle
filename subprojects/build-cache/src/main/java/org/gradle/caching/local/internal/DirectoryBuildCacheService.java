@@ -56,6 +56,7 @@ public class DirectoryBuildCacheService implements LocalBuildCacheService, Build
         this.failedFileSuffix = failedFileSuffix;
     }
 
+    @SuppressWarnings("required.method.not.called") // FP: add @MCA annotation to Closer in com.google.common.io
     private static class LoadAction implements Action<File> {
         private final BuildCacheEntryReader reader;
         boolean loaded;
@@ -128,6 +129,7 @@ public class DirectoryBuildCacheService implements LocalBuildCacheService, Build
     }
 
     @Override
+    @SuppressWarnings("required.method.not.called") // FP: add @MCA annotation to Closer in com.google.common.io
     public void store(final BuildCacheKey key, final BuildCacheEntryWriter result) throws BuildCacheException {
         tempFileStore.withTempFile(key, new Action<File>() {
             @Override

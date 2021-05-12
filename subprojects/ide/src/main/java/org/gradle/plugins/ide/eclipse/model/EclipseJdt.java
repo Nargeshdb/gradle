@@ -28,6 +28,7 @@ import javax.inject.Inject;
  * Enables fine-tuning jdt details of the Eclipse plugin
  *
  * <pre class='autoTested'>
+ *
  * plugins {
  *     id 'java'
  *     id 'eclipse'
