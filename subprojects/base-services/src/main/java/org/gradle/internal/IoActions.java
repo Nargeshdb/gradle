@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethods;
 
 /**
  * Various utilities for dealing with IO actions.
@@ -114,6 +115,7 @@ public abstract class IoActions {
      *
      * @param resource The resource to be closed
      */
+    @EnsuresCalledMethods(value = "#1", methods = "close")
     public static void closeQuietly(@Nullable Closeable resource) {
         try {
             if (resource != null) {

@@ -1,5 +1,12 @@
 plugins {
     id("gradlebuild.distribution.api-java")
+    id("org.checkerframework") version "0.5.17"
+}
+
+apply(plugin = "org.checkerframework")
+
+repositories {
+    mavenCentral()
 }
 
 configurations {
@@ -163,6 +170,23 @@ dependencies {
         because("Some tests utilise the 'java-gradle-plugin' and with that TestKit")
     }
     crossVersionTestDistributionRuntimeOnly(project(":distributions-core"))
+
+    checkerFramework("net.sridharan.objectconstruction:object-construction-checker:0.1.12")
+    implementation("net.sridharan.objectconstruction:object-construction-qual:0.1.12")
+}
+
+configure<org.checkerframework.gradle.plugin.CheckerFrameworkExtension> {
+    checkers.add("org.checkerframework.checker.objectconstruction.ObjectConstructionChecker")
+    extraJavacArgs.add("-AsuppressWarnings=type.anno.before")
+    extraJavacArgs.add("-Werror")
+    extraJavacArgs.add("-AcheckMustCall")
+    extraJavacArgs.add("-AwarnUnneededSuppressions")
+}
+
+afterEvaluate {
+    tasks.withType(JavaCompile::class) {
+        options.compilerArgs.add("-Xlint:-processing")
+    }
 }
 
 strictCompile {
@@ -181,5 +205,5 @@ tasks.compileTestGroovy {
     groovyOptions.fork("memoryInitialSize" to "128M", "memoryMaximumSize" to "1G")
 }
 
-integTest.usesSamples.set(true)
-testFilesCleanup.reportOnly.set(true)
+//integTest.usesSamples.set(true)
+//testFilesCleanup.reportOnly.set(true)
