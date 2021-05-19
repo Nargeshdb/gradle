@@ -15,6 +15,7 @@
  */
 package org.gradle.internal.io;
 
+import org.checkerframework.checker.objectconstruction.qual.NotOwning;
 import org.gradle.internal.UncheckedException;
 
 import java.io.EOFException;
@@ -91,7 +92,7 @@ public class StreamByteBuffer {
         return Math.min(Math.max(value, min), max);
     }
 
-    public OutputStream getOutputStream() {
+    public @NotOwning OutputStream getOutputStream() {
         return output;
     }
 

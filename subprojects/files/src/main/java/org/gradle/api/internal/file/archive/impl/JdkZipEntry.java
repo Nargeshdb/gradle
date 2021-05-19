@@ -64,6 +64,7 @@ class JdkZipEntry implements ZipEntry {
     }
 
     @Override
+    @SuppressWarnings("objectconstruction:required.method.not.called") //FP: explained in the doc: https://docs.google.com/document/d/1D7mZc-QUc7mZcPhS0y_cQrjGdCGTCE2VGfK8TuukhiQ/edit?usp=sharing
     public <T> T withInputStream(InputStreamAction<T> action) throws IOException {
         InputStream is = inputStreamSupplier.get();
         try {

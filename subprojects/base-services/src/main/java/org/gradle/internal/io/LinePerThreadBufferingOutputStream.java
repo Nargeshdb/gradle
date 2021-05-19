@@ -16,6 +16,7 @@
 
 package org.gradle.internal.io;
 
+import org.checkerframework.checker.objectconstruction.qual.NotOwning;
 import org.gradle.internal.SystemProperties;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class LinePerThreadBufferingOutputStream extends PrintStream {
         this.handler = handler;
     }
 
-    private PrintStream getStream() {
+    @NotOwning private PrintStream getStream() {
         PrintStream printStream = stream.get();
         if (printStream == null) {
             printStream = new PrintStream(new LineBufferingOutputStream(handler, lineSeparator));

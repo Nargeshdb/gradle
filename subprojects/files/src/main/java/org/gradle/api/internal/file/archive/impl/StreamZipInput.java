@@ -18,6 +18,9 @@ package org.gradle.api.internal.file.archive.impl;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.AbstractIterator;
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethods;
+import org.checkerframework.checker.mustcall.qual.MustCallAlias;
+import org.checkerframework.checker.objectconstruction.qual.Owning;
 import org.gradle.api.internal.file.archive.ZipEntry;
 import org.gradle.api.internal.file.archive.ZipInput;
 import org.gradle.internal.file.FileException;
@@ -29,9 +32,10 @@ import java.util.zip.ZipInputStream;
 
 public class StreamZipInput implements ZipInput {
 
-    private final ZipInputStream in;
+    private final @Owning ZipInputStream in;
 
-    public StreamZipInput(InputStream in) {
+    @SuppressWarnings("objectconstruction:required.method.not.called") //FP: add @MCA annotation for ZipInputStream
+    public @MustCallAlias StreamZipInput(@MustCallAlias InputStream in) {
         this.in = new ZipInputStream(in);
     }
 
@@ -66,6 +70,7 @@ public class StreamZipInput implements ZipInput {
     }
 
     @Override
+    @EnsuresCalledMethods(value = "this.in", methods = "close")
     public void close() throws IOException {
         in.close();
     }

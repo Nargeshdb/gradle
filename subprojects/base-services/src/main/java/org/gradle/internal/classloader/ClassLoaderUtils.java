@@ -156,7 +156,11 @@ public abstract class ClassLoaderUtils {
                 return MethodHandles.privateLookupIn(classLoader.getClass(), baseLookup);
             } catch (IllegalAccessException e) {
                 // Fallback to ClassLoader's lookup
-                return MethodHandles.privateLookupIn(ClassLoader.class, baseLookup);
+                try {
+                    return MethodHandles.privateLookupIn(ClassLoader.class, baseLookup);
+                } catch (IllegalAccessException ee) {
+                    throw ee;
+                }
             }
         }
     }

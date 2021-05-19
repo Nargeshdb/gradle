@@ -17,6 +17,7 @@
 package org.gradle.util.internal;
 
 import org.apache.commons.lang.StringUtils;
+import org.checkerframework.checker.mustcall.qual.MustCallAlias;
 import org.gradle.api.Transformer;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.specs.Spec;
@@ -294,6 +295,7 @@ public class GUtil {
         return map;
     }
 
+    @SuppressWarnings("required.method.not.called") //FP: needs @PolyMustCall annotation in Formatter class
     public static String toString(Iterable<?> names) {
         Formatter formatter = new Formatter();
         boolean first = true;
@@ -411,7 +413,8 @@ public class GUtil {
         return buffer.readAsByteArray();
     }
 
-    public static void serialize(Object object, OutputStream outputStream) {
+    @SuppressWarnings("required.method.not.called") // FP: Add annotation to ObjectOutputStream
+    public static void serialize(Object object, @MustCallAlias OutputStream outputStream) {
         try {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(object);

@@ -16,6 +16,7 @@
 
 package org.gradle.internal;
 
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethods;
 import org.gradle.api.Action;
 import org.gradle.api.Transformer;
 import org.gradle.api.UncheckedIOException;
@@ -99,6 +100,7 @@ public abstract class IoActions {
      *
      * @param resource The resource to be closed
      */
+    @EnsuresCalledMethods(value = "#1", methods = "close")
     public static void uncheckedClose(@Nullable Closeable resource) {
         try {
             if (resource != null) {
@@ -114,6 +116,7 @@ public abstract class IoActions {
      *
      * @param resource The resource to be closed
      */
+    @EnsuresCalledMethods(value = "#1", methods = "close")
     public static void closeQuietly(@Nullable Closeable resource) {
         try {
             if (resource != null) {

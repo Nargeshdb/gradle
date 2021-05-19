@@ -15,6 +15,7 @@
  */
 package org.gradle.internal.hash;
 
+import org.checkerframework.checker.objectconstruction.qual.Owning;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.internal.UncheckedException;
 
@@ -45,7 +46,7 @@ public class HashUtil {
         }
     }
 
-    public static HashValue createHash(InputStream instr, String algorithm) {
+    public static HashValue createHash(@Owning InputStream instr, String algorithm) {
         MessageDigest messageDigest;
         try {
             messageDigest = createMessageDigest(algorithm);
