@@ -65,6 +65,7 @@ public class DirectoryBuildCacheService implements LocalBuildCacheService, Build
         }
 
         @Override
+        @SuppressWarnings("required.method.not.called") //FP: need annotation in Closer
         public void execute(@Nonnull File file) {
             try {
                 Closer closer = Closer.create();
@@ -128,6 +129,7 @@ public class DirectoryBuildCacheService implements LocalBuildCacheService, Build
     }
 
     @Override
+    @SuppressWarnings("required.method.not.called") //FP: need annotation in Closer
     public void store(final BuildCacheKey key, final BuildCacheEntryWriter result) throws BuildCacheException {
         tempFileStore.withTempFile(key, new Action<File>() {
             @Override
